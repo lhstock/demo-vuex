@@ -2,8 +2,8 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
-    <ul v-for="(nav,index) in arrNav" :key="index" >
-<li>
+    <ul >
+<li  v-for="(nav,index) in arrNav" :key="index">
   <a :href="nav.link" target="_blank">
    vuex- {{nav.content}}
   </a>
@@ -107,11 +107,12 @@ export default {
     let _this = this
     setTimeout(() => {
       let testNav = [
-        {link: 'https://baidu.com', content: '百度'}
+        {link: 'https://baidu.com', content: '百度'},
+        {link: 'https://bai.com', content: '百'}
       ]
       let arrNav = testNav
       _this.$store.dispatch('loadNavigation', arrNav)
-    }, 1000 * 3)
+    }, 1000 * 1)
   }
 }
 </script>
