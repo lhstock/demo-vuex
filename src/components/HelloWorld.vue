@@ -1,108 +1,47 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul >
-<li  v-for="(nav,index) in arrNav" :key="index">
-  <a :href="nav.Link" target="_blank">
-   vuex- {{nav.Content}}
-  </a>
-</li>
+    <ul>
+      <li
+        v-for="(nav,index) in arrNav"
+        :key="index"
+      >
+          <!-- :href="nav.Link" -->
+        <p @click="handleClick(index)">
+
+          vuex- {{nav.Content}}
+        </p>
+      </li>
     </ul>
 
     <div>
-total:{{totalNav}}
-      </div>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+      total:{{totalNav}}
+    </div>
+    <wrapper v-if="isClick" class="testWrapper">
+    </wrapper>
+
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import wrapper from './wrapper.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'HelloWorld',
+  watch: {
+  },
+  components: {
+    wrapper
+  },
   computed: {
     ...mapGetters({
       arrNav: 'arrNavigation',
       totalNav: 'totalNav'
-    })
+    }),
+    totalOfNav () {
+      return this.$store.state.totalOfClick
+    }
+
   },
   // computed: {
   //   arrNav () {
@@ -114,26 +53,37 @@ export default {
   // },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      isClick: false
+
     }
   },
   created () {
     let _this = this
+    console.log('debug', this)
     setTimeout(() => {
       let testNav = [
-        {link: 'https://baidu.com', content: '百度'},
-        {link: 'https://bai.com', content: '百'}
+        { link: 'https://www.baidu.com', content: '百度' },
+        { link: 'http://bai.com', content: '百' }
       ]
       let arrNav = testNav
       _this.$store.dispatch('loadNavigation', arrNav)
     }, 1000 * 1)
+  },
+  methods: {
+    ...mapActions(['clickNavigation']),
+    handleClick (index) {
+      this.isClick = true
+      this.clickNavigation(index)
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -147,4 +97,10 @@ li {
 a {
   color: #42b983;
 }
+
+.testWrapper{
+  display: flex;
+
+}
+
 </style>

@@ -6,6 +6,9 @@ let getters = {
   },
   totalNav: state => {
     return state.arrNavigation.length
+  },
+  activeOfUrl: state => {
+    return state.arrNavigation[state.activeIndex].link
   }
 }
 export default getters

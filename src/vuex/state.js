@@ -1,4 +1,6 @@
 let init = {
-  arrNavigation: []
+  arrNavigation: [],
+  totalOfClick: {},
+  activeIndex: 0
 }
 export default init
