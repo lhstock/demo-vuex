@@ -4,11 +4,15 @@
     <h2>Essential Links</h2>
     <ul >
 <li  v-for="(nav,index) in arrNav" :key="index">
-  <a :href="nav.link" target="_blank">
-   vuex- {{nav.content}}
+  <a :href="nav.Link" target="_blank">
+   vuex- {{nav.Content}}
   </a>
 </li>
     </ul>
+
+    <div>
+total:{{totalNav}}
+      </div>
     <ul>
       <li>
         <a
@@ -91,13 +95,23 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 'HelloWorld',
   computed: {
-    arrNav () {
-      return this.$store.state.arrNavigation
-    }
+    ...mapGetters({
+      arrNav: 'arrNavigation',
+      totalNav: 'totalNav'
+    })
   },
+  // computed: {
+  //   arrNav () {
+  //     return this.$store.getters.arrNavigation
+  //   },
+  //   totalNav () {
+  //     return this.$store.getters.totalNav
+  //   }
+  // },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
