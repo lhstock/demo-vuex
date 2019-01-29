@@ -2,6 +2,13 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
+    <ul v-for="(nav,index) in arrNav" :key="index" >
+<li>
+  <a :href="nav.link" target="_blank">
+   vuex- {{nav.content}}
+  </a>
+</li>
+    </ul>
     <ul>
       <li>
         <a
@@ -86,10 +93,25 @@
 <script>
 export default {
   name: 'HelloWorld',
+  computed: {
+    arrNav () {
+      return this.$store.state.arrNavigation
+    }
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  created () {
+    let _this = this
+    setTimeout(() => {
+      let testNav = [
+        {link: 'https://baidu.com', content: '百度'}
+      ]
+      let arrNav = testNav
+      _this.$store.dispatch('loadNavigation', arrNav)
+    }, 1000 * 3)
   }
 }
 </script>
